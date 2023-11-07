@@ -1,0 +1,60 @@
+#include "DHT.h"
+#define DHTPIN 2     // what pin we're connected to
+#define DHTTYPE DHT11   // DHT 11
+//#define DHTTYPE DHT22   // DHT 22  (AM2302)
+//#define DHTTYPE DHT21   // DHT 21 (AM2301)
+
+DHT dht(DHTPIN, DHTTYPE);
+int in1=3;
+int in2=4;
+int en1=5;
+void setup() 
+{
+  Serial.begin(9600);
+  Serial.println("DHTxx test!");
+  dht.begin();
+pinMode(3, OUTPUT);
+pinMode(4, OUTPUT);
+pinMode(5, OUTPUT);
+}
+void loop() {
+ 
+ // Wait a few seconds between measurements.
+  delay(2000);
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+ // Check if any reads failed and exit early (to try again).
+  if (isnan(t)){
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+ Serial.print("\n");
+  Serial.print("Temperature: ");
+Serial.print(t);
+  Serial.print(" *C ");
+
+//Change temperature ranges based on your requirement
+
+  if(t <= 28)
+  {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    analogWrite(en1, 0);
+    
+  }
+  else if((t > 28) && (t <= 30))
+  {
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    analogWrite(en1, 100);
+  }
+
+  else if(t > 30)
+  {
+digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    analogWrite(en1, 255);
+  }
+  
+
+}
