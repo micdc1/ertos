@@ -1,0 +1,53 @@
+#include <WiFi.h>
+#include <ThingSpeak.h>
+#include < DHT.h>
+const char* ssid = "Enter The Name of Your Wi-Fi Here" ;
+const char* password = "Enter The Password of Your Wi-Fi Here" ;
+WiFiClient client ;
+unsigned long myChannelNumber = 1;//Enter Your Channel Number and change it if it is not 1
+const char * my WriteAPIKey = "Enter the Write API key of your Channel Here";
+float temp;
+float humid ;
+DHT dht(5, DHT11);
+void setup {
+// put your setup code here, to run once:
+pinMode (5, INPUT) ;
+Serial.begin (9600) ;
+dht.begin ();
+WiFi.mode (WIFI_STA);
+ThingSpeak begin(client);
+｝
+void loop0 {
+// put your main code here, to run repeatedly:
+//Code to connect/reconnect to Wi-Fi
+if (WiFi.status!= WL_CONNECTED) {
+Serial. print ("Attempting to connect");
+while (WiFi.status()!= WL_CONNECTED) {
+WiFi.begin(ssid, password);
+delay (5000);
+｝
+Serial.printin ("InConnected.");
+｝
+//Code to monitor the data
+temp = dht.readTemperature();
+humid = dht.readHumidity();
+delay (100);
+//Code to Write the Data
+Serial.println(Temperature: ");
+Serial.print (temp) ;
+Serial.print("°C") ;
+Serial.printIn ("Humidity: ");
+Serial. print (humid) ;
+Serial.print("%") ;
+int x = Thing Speak.writeField(myChannelNumber, 1, temp, my WriteAPIKey);
+if (x = 200) {
+Serial.println ("Channel update successful.");
+else l
+Serial.println("Problem updating channel. HTTP error code " + String(x));
+x = ThingSpeak.writeField (myChannelNumber, 2, humid, my WriteAPIKey);
+if (× = 200) {
+Serial. printIn("Channel update successful.");
+else {
+Serial. printIn("Problem updating channel. HTTP error code " + String(x));
+}
+}
