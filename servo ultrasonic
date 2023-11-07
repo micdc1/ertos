@@ -1,0 +1,80 @@
+#include <Servo.h>
+#include LiquidCrystal _12C.h>
+#include < HCSR04.h>
+Servo myservo;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int distance=0;
+byte triggerPin = 12;
+byte echoPin = 11;
+int pos = 0;
+void setup() {
+myservo.attach (10);
+Serial.begin(9600);
+Icd.init(;
+lcd.begin(16, 2); lcd.backlight);
+lcd.setCursor (0, 0);
+lcd. print ("start");
+pinMode(triggerPin, OUTPUT);
+pinMode(echoPin, INPUT);
+Icd.print("All set up");
+}
+void loop(){
+digital Write(triggerPin,LOW); delayMicroseconds (5);
+digitalWrite(trigger Pin, HIGH);
+delayMicroseconds(10);
+digital Write(triggerPin,LOW);
+int duration = pulseln(echoPin,HIGH);
+distance = (duration/2) / 29.1;
+Serial. printIn (distance);
+if(distance<=10){
+lcd.clear );
+lcd.setCursor (0, 0);
+Icd. print ("Door Open"); lcd.set Cursor(0, 1); lcd.print (distance); lcd.print("cm');
+myservo.write(90);
+
+}
+else{
+lcd.clear();
+lcd.setCursor(0, 0);
+lcd.print ("Door Closed");
+lcd. setCursor (0, 1);
+led.print(distance);
+lcd. print ("cm");
+myservo. write(0);
+}
+delay (250);
+}
+
+
+
+SOURCE CODE (without 12C Module)
+
+
+#include <Servo.h>
+#include < LiquidCrystal. h>
+#include <HCSR04.h>
+Servo myservo;
+LiquidCrystal lcd (12, 11, 5, 4, 3, 2); 
+int distance=0;
+byte triggerPin = 13;
+byte echoPin = 6;
+int pos = 0;
+void setup {
+myservo.attach (9);
+Serial.begin (9600); 
+lcd.begin(16, 2); 
+pinMode (triggerPin, OUTPUT); 
+pinMode (echoPin, INPUT); 
+lcd.print("All set up");
+void loop {
+digital Write(triggerPin,LOW);
+delayMicroseconds (5);
+digitalWrite(triggerPin,HIGH);
+delayMicroseconds 10); 
+digital Write(triggerPin,LOW);
+int duration = pulseln(echoPin, HIGH);
+distance = (duration/2) / 29.1;
+Serial. printin (distance);
+If(distance<=10){
+lcd.clear();
+lcd.setCursor(0,0);
